@@ -1,6 +1,6 @@
 ---
 title: Endorsed Forks
-description: Forks are alternative versions of Mihon with exclusive features.
+description: Rokku is a fork in the Tachiyomi/Mihon family tree, alongside these other forks.
 lastUpdated: false
 editLink: false
 prev: false
@@ -28,6 +28,10 @@ features:
     details: A fork with features from Sy and Mihon plus added personal flair.
     icon: <img src="/forks/logo-komikku.webp" alt="Komikku Logo" height="32" width="32">
     link: /forks/Komikku/
+  - title: Rokku
+    details: A fork of Yōkai, continuously migrating updates from Mihon & other forks.
+    icon: <img src="/img/logo-128px.png" alt="Rokku Logo" height="32" width="32">
+    link: /
 ---
 
 <script setup>
@@ -36,6 +40,6 @@ import { VPHomeFeatures } from "vitepress/theme"
 
 # Endorsed Forks
 
-Forks are alternative versions of Mihon with exclusive features.
+Rokku is a fork originating from Yōkai, continuously migrating updates from both Mihon & other forks.
 
 <VPHomeFeatures />

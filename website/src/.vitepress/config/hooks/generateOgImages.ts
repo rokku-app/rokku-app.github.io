@@ -2,6 +2,7 @@ import type { ContentData, SiteConfig } from 'vitepress'
 import type { SatoriOptions } from 'x-satori/vue'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { Octokit } from '@octokit/rest'
 import { renderAsync } from '@resvg/resvg-js'
@@ -105,10 +106,10 @@ async function generateOgImages(config: SiteConfig) {
   }
 
   // Generate OG images for dynamic changelog pages
-  const octokit = new Octokit()
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const releases = await octokit.paginate(octokit.repos.listReleases, {
-    owner: 'mihonapp',
-    repo: 'mihon',
+    owner: 'rokku-app',
+    repo: 'rokku',
     per_page: 100,
   })
 
@@ -119,7 +120,7 @@ async function generateOgImages(config: SiteConfig) {
       url: `/changelogs/${r.tag_name}`,
       frontmatter: {
         // Prefer release name; fallback to tag
-        title: r.name || `Mihon ${r.tag_name.substring(1)}`,
+        title: r.name || `Rokku ${r.tag_name.substring(1)}`,
         description: extractChangelogSnippet(r.body),
       } as any,
     }

@@ -4,7 +4,7 @@ on:
     workflow_dispatch: {}
     push:
         branches:
-            - main
+            - master
     repository_dispatch:
         types: [app_release]
 
@@ -14,7 +14,7 @@ concurrency:
 
 env:
     VITE_BASE: /
-    VITE_HOSTNAME: https://mihon.app
+    VITE_HOSTNAME: https://rokku-app.github.io
 
 jobs:
     deploy:
@@ -48,7 +48,7 @@ jobs:
               with:
                 version: 10
                 run_install: false
-                package_json_file: "website/package-lock.json"
+                package_json_file: "website/package.json"
 
             - name: Get pnpm store directory
               shell: bash
@@ -68,6 +68,8 @@ jobs:
 
             - name: Build
               run: pnpm build
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Configure pages
               uses: actions/configure-pages@v5
