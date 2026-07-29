@@ -18,6 +18,24 @@ $themeColor = #2e7d46
   --vp-c-brand-darker: shade($themeColor, 50%)
   --vp-c-brand-darkest: shade($themeColor, 75%)
   --vp-c-brand-dimm: alpha($themeColor, 0.08)
+
+  // VitePress 1.x's default theme reads brand color from these
+  // "-1/-2/-3/-soft" variables (buttons, links, active nav/sidebar
+  // items, DocSearch, Element Plus, etc.), separately from the
+  // legacy "--vp-c-brand[-light|-dark...]" set above. Both families
+  // must be kept in sync or components fall back to the default
+  // VitePress indigo.
+  --vp-c-brand-1: $themeColor
+  --vp-c-brand-2: shade($themeColor, 10%)
+  --vp-c-brand-3: shade($themeColor, 20%)
+  --vp-c-brand-soft: alpha($themeColor, 0.14)
+}
+
+.dark {
+  // Brighter tint so links/buttons keep enough contrast on dark backgrounds
+  --vp-c-brand-1: tint($themeColor, 35%)
+  --vp-c-brand-2: tint($themeColor, 20%)
+  --vp-c-brand-3: $themeColor
 }
 
 // Rounded corners for content images inserted via HTML (our converted images)
