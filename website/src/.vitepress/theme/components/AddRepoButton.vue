@@ -36,7 +36,7 @@ onMounted(() => {
           Unsupported operating system
         </p>
         <p>
-          <strong>Mihon</strong> is an <strong>Android app</strong> only.
+          <strong>Rokku</strong> is an <strong>Android app</strong> only.
           Use an <strong>Android device</strong> to download and install the app.
         </p>
       </div>
@@ -54,7 +54,7 @@ onMounted(() => {
         </a>
       </div>
       <span class="version-disclaimer">
-        Requires <strong>Mihon 0.15.2</strong> or higher.
+        Requires <strong>Rokku</strong>.
       </span>
       <div class="custom-block danger">
         <p class="custom-block-title">
