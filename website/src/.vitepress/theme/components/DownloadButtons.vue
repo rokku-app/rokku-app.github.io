@@ -5,9 +5,9 @@ import { computed, onMounted, ref } from 'vue'
 import { data as release } from '../data/release.data'
 
 const downloadInformation = computed(() => ({
-  beta: {
-    tagName: release.beta.tag_name ?? 'r0000',
-    asset: (release.beta.assets ?? [])
+  nightly: {
+    tagName: release.nightly.tag_name ?? 'r0000',
+    asset: (release.nightly.assets ?? [])
       .find(a => /^rokku-r\d{4,}.apk/.test(a.name)),
   },
   stable: {
@@ -23,13 +23,13 @@ onMounted(() => {
   isAndroid.value = !!navigator.userAgent.match(/android/i)
 })
 
-function handleAnalytics(type: 'beta' | 'stable') {
+function handleAnalytics(type: 'nightly' | 'stable') {
   window.gtag?.('event', 'Download', {
     event_category: 'App',
     event_label: type === 'stable' ? 'Stable' : 'Beta',
     version: type === 'stable'
       ? release.stable.tag_name
-      : release.beta.tag_name,
+      : release.nightly.tag_name,
   })
 }
 </script>
@@ -71,13 +71,13 @@ function handleAnalytics(type: 'beta' | 'stable') {
       </a>
       <a
         class="download-button secondary"
-        :download="downloadInformation.beta.asset?.name"
-        :href="downloadInformation.beta.asset?.browser_download_url"
-        @click="handleAnalytics('beta')"
+        :download="downloadInformation.nightly.asset?.name"
+        :href="downloadInformation.nightly.asset?.browser_download_url"
+        @click="handleAnalytics('nightly')"
       >
         <IconBugReport />
         <span class="text">Rokku Beta</span>
-        <span class="version">{{ downloadInformation.beta.tagName }}</span>
+        <span class="version">{{ downloadInformation.nightly.tagName }}</span>
       </a>
     </div>
     <span class="version-disclaimer">

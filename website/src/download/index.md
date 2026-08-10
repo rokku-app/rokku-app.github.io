@@ -15,7 +15,7 @@ import Changelog from "@theme/components/Changelog.vue";
 
 # Download
 
-The latest stable version of **Rokku** was released **<ReleaseDate type="stable" />** and the latest beta version was released **<ReleaseDate type="beta" />**.
+The latest stable version of **Rokku** was released **<ReleaseDate type="stable" />** and the latest beta version was released **<ReleaseDate type="nightly" />**.
 
 Beta releases are intended for testing upcoming changes and may not be a stable experience.
 

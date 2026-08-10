@@ -9,7 +9,7 @@ type GitHubRelease = GetResponseDataTypeFromEndpointMethod<typeof octokit.repos.
 
 export interface AppRelease {
   stable: GitHubRelease
-  beta: GitHubRelease
+  nightly: GitHubRelease
 }
 
 declare const data: AppRelease
@@ -22,13 +22,14 @@ export default defineLoader({
       repo: 'rokku',
     })
 
-    const { data: releases } = await octokit.repos.listReleases({
+    // Nightly releases are always prerelease:true, and getLatestRelease excludes
+    // prereleases, so the most recent nightly has to be pulled from the list instead.
+    const { data: nightlyReleases } = await octokit.repos.listReleases({
       owner: 'rokku-app',
-      repo: 'rokku',
-      per_page: 10,
+      repo: 'rokku-nightly',
+      per_page: 1,
     })
-    const beta = releases.find(r => r.prerelease) ?? stable
 
-    return { stable, beta: beta as GitHubRelease }
+    return { stable, nightly: nightlyReleases[0] }
   },
 })
