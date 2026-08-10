@@ -204,11 +204,11 @@ function handleAnalytics(type: 'nightly' | 'stable') {
   }
 
   .rokku-logo {
-    width: 2.25rem
-    height: 2.25rem
+    width: 2.5rem
+    height: 2.5rem
     background: currentColor
-    mask: url('/safari-pinned-tab.svg') center / contain no-repeat
-    -webkit-mask: url('/safari-pinned-tab.svg') center / contain no-repeat
+    mask: url('/img/rokku-kanji.png') center / contain no-repeat
+    -webkit-mask: url('/img/rokku-kanji.png') center / contain no-repeat
   }
 
   .stable & {
