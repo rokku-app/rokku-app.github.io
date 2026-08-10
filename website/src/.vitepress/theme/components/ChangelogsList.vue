@@ -3,6 +3,7 @@ import MarkdownIt from 'markdown-it'
 import { data as changelogs } from '../data/changelogs.data'
 import { formatChangelog } from '../utils/formatChangelog'
 import Contributors from './Contributors.vue'
+import LocalizedDate from './LocalizedDate.vue'
 
 const md = new MarkdownIt({ html: true })
 
@@ -13,10 +14,6 @@ function renderMarkdown(string: string | null | undefined) {
   )
   return formatChangelog(md, pre, { stripChecksums: true })
 }
-
-const dateFormatter = new Intl.DateTimeFormat('en', {
-  dateStyle: 'medium',
-})
 </script>
 
 <template>
@@ -37,9 +34,7 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
         :aria-label="`Permalink to &quot;${release.tag_name}&quot;`"
       />
     </h2>
-    <time :datetime="release.published_at!">
-      {{ dateFormatter.format(new Date(release.published_at!)) }}
-    </time>
+    <LocalizedDate :value="release.published_at!" />
     <div v-html="renderMarkdown(release.body)" />
     <Contributors
       :body="release.body!"

@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import type { AppRelease } from '../data/release.data'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 import { computed, onMounted, ref, toRefs } from 'vue'
 import { data as release } from '../data/release.data'
 
 const props = defineProps<{ type: keyof AppRelease }>()
 const { type } = toRefs(props)
 
-const momentInfo = computed(() => ({
-  relative: moment(release[type.value].published_at).fromNow(),
-  exact: moment(release[type.value].published_at).format('dddd, MMMM Do YYYY [at] HH:mm'),
-  iso: release[type.value].published_at ?? undefined,
-}))
+const dateInfo = computed(() => {
+  const date = DateTime.fromISO(release[type.value].published_at ?? '', { zone: 'utc' }).setLocale('en')
+  return {
+    relative: date.isValid ? date.toRelative() ?? '' : '',
+    exact: date.isValid ? date.toLocaleString(DateTime.DATETIME_FULL) : '',
+    iso: release[type.value].published_at ?? undefined,
+  }
+})
 
 // Mimic the <ClientOnly /> behavior to show custom text while rendering.
 const show = ref(false)
@@ -22,10 +25,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <time v-if="show" :datetime="momentInfo.iso" :title="momentInfo.exact">
-    {{ momentInfo.relative }}
+  <time v-if="show" :datetime="dateInfo.iso" :title="dateInfo.exact">
+    {{ dateInfo.relative }}
   </time>
-  <time v-else :datetime="momentInfo.iso">
-    {{ momentInfo.exact }}
+  <time v-else :datetime="dateInfo.iso">
+    {{ dateInfo.exact }}
   </time>
 </template>
