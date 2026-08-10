@@ -1,8 +1,15 @@
 <script setup lang="ts">
 /// <reference types="@types/gtag.js" />
 
+import {
+  IconAlertOutline,
+  IconAndroid,
+  IconCalendarOutline,
+  IconTagOutline,
+} from '@iconify-prerendered/vue-mdi'
 import { computed, onMounted, ref } from 'vue'
 import { data as release } from '../data/release.data'
+import ReleaseDate from './ReleaseDate.vue'
 
 const downloadInformation = computed(() => ({
   nightly: {
@@ -58,92 +65,277 @@ function handleAnalytics(type: 'nightly' | 'stable') {
         <a href="/docs/faq/general">General FAQ</a>.
       </blockquote>
     </div>
-    <div class="download-buttons">
-      <a
-        class="download-button primary"
-        :download="downloadInformation.stable.asset?.name"
-        :href="downloadInformation.stable.asset?.browser_download_url"
-        @click="handleAnalytics('stable')"
-      >
-        <IconDownload />
-        <span class="text">Rokku</span>
-        <span class="version">{{ downloadInformation.stable.tagName }}</span>
-      </a>
-      <a
-        class="download-button secondary"
-        :download="downloadInformation.nightly.asset?.name"
-        :href="downloadInformation.nightly.asset?.browser_download_url"
-        @click="handleAnalytics('nightly')"
-      >
-        <IconBugReport />
-        <span class="text">Rokku Beta</span>
-        <span class="version">{{ downloadInformation.nightly.tagName }}</span>
-      </a>
-    </div>
-    <span class="version-disclaimer">
-      Requires <strong>Android 8.0</strong> or higher.
-    </span>
+    <section class="release-selector" aria-label="Choose your release">
+      <div class="release-cards">
+        <article class="release-card stable">
+          <div class="release-card-header">
+            <span class="release-icon" aria-hidden="true"><img src="/img/logo-128px.png" alt=""></span>
+            <div>
+              <h3>Stable</h3>
+              <p>Recommended for most users</p>
+            </div>
+          </div>
+          <dl class="release-details">
+            <div>
+              <IconTagOutline aria-hidden="true" />
+              <div class="release-detail-copy">
+                <dt>Latest release:</dt>
+                <dd>{{ downloadInformation.stable.tagName }}</dd>
+              </div>
+            </div>
+            <div>
+              <IconCalendarOutline aria-hidden="true" />
+              <div class="release-detail-copy">
+                <dt>Released:</dt>
+                <dd><ReleaseDate type="stable" /></dd>
+              </div>
+            </div>
+          </dl>
+          <div class="release-actions">
+            <a
+              class="download-button primary"
+              :download="downloadInformation.stable.asset?.name"
+              :href="downloadInformation.stable.asset?.browser_download_url"
+              @click="handleAnalytics('stable')"
+            >
+              <IconDownload />
+              <span class="text">Rokku</span>
+              <span class="version">{{ downloadInformation.stable.tagName }}</span>
+            </a>
+            <span class="release-action-note">
+              <IconAndroid aria-hidden="true" />
+              <span>Requires <strong>Android 8.0</strong> or higher.</span>
+            </span>
+          </div>
+        </article>
+        <article class="release-card beta">
+          <div class="release-card-header">
+            <span class="release-icon" aria-hidden="true"><IconBugReport /></span>
+            <div>
+              <h3>Beta</h3>
+              <p>Preview upcoming changes</p>
+            </div>
+          </div>
+          <dl class="release-details">
+            <div>
+              <IconTagOutline aria-hidden="true" />
+              <div class="release-detail-copy">
+                <dt>Latest release:</dt>
+                <dd>{{ downloadInformation.nightly.tagName }}</dd>
+              </div>
+            </div>
+            <div>
+              <IconCalendarOutline aria-hidden="true" />
+              <div class="release-detail-copy">
+                <dt>Released:</dt>
+                <dd><ReleaseDate type="nightly" /></dd>
+              </div>
+            </div>
+          </dl>
+          <div class="release-actions">
+            <a
+              class="download-button secondary"
+              :download="downloadInformation.nightly.asset?.name"
+              :href="downloadInformation.nightly.asset?.browser_download_url"
+              @click="handleAnalytics('nightly')"
+            >
+              <IconDownload />
+              <span class="text">Rokku Beta</span>
+              <span class="version">{{ downloadInformation.nightly.tagName }}</span>
+            </a>
+            <span class="release-action-note">
+              <IconAlertOutline aria-hidden="true" />
+              <span>May contain unfinished features or stability issues.</span>
+            </span>
+          </div>
+        </article>
+      </div>
+    </section>
   </div>
 </template>
 
 <style lang="stylus">
-.download-buttons {
+.release-selector {
+  margin: 1.5rem auto 0
+}
+
+.release-cards {
+  display: grid
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+  gap: 1.5rem
+}
+
+.release-card {
   display: flex
-  gap: 0.75em
-  justify-content: center
+  min-width: 0
+  flex-direction: column
+  border: 1px solid var(--vp-c-divider)
+  border-radius: 14px
+  padding: 1.5rem
+  background: var(--vp-c-bg-soft)
+
+  &.stable {
+    border-color: var(--vp-c-brand-border)
+    background: var(--vp-c-brand-dimm)
+  }
+}
+
+.release-card-header {
+  display: flex
   align-items: center
-  margin: 0.75em auto
+  gap: 1rem
+  padding-bottom: 0.75rem
+
+  h3 {
+    margin: 0
+    font-size: 1.5rem
+  }
+
+  p {
+    margin: 0.15rem 0 0
+    color: var(--vp-c-text-2)
+    font-size: 1rem
+  }
+}
+
+.release-icon {
+  display: grid
+  width: 4rem
+  height: 4rem
+  flex: 0 0 auto
+  place-items: center
+  border-radius: 50%
+  overflow: hidden
+  color: var(--vp-c-text-1)
+  background: var(--vp-c-default-soft)
+
+  svg {
+    font-size: 2rem
+  }
+
+  img {
+    width: 100%
+    height: 100%
+    object-fit: cover
+  }
+
+  .stable & {
+    background: var(--vp-c-brand-soft)
+  }
+}
+
+.release-details {
+  display: grid
+  gap: 0.5rem
+  margin: 0.75rem 0
+
+  div {
+    display: flex
+    align-items: center
+    gap: 0.75rem
+  }
+
+  .release-detail-copy {
+    display: inline-flex
+    align-items: baseline
+    gap: 0.5rem
+    min-width: 0
+  }
+
+  svg {
+    width: 2rem
+    height: 2rem
+    flex: 0 0 auto
+    padding: 0.5rem
+    border-radius: 50%
+    color: var(--vp-c-text-2)
+    background: var(--vp-c-default-soft)
+
+    .stable & {
+      color: var(--vp-c-brand-darker)
+      background: var(--vp-c-brand-dimm)
+    }
+  }
+
+  dt,
+  dd {
+    margin: 0
+    font-size: 1rem
+  }
+
+  dt {
+    color: var(--vp-c-text-2)
+  }
+
+  dd {
+    color: var(--vp-c-text-1)
+    font-weight: 600
+  }
+}
+
+.release-action-note {
+  display: flex
+  align-items: flex-start
+  gap: 0.5rem
+  margin: 0.75rem 0 0
+  color: var(--vp-c-text-2)
+  font-size: 0.9rem
+  line-height: 1.5
+
+  svg {
+    margin-top: 0.1rem
+    flex: 0 0 auto
+    font-size: 1.2rem
+  }
+}
+
+.release-actions {
+  margin-top: auto
+  padding-top: 0.75rem
 }
 
 .download-button {
-  display: inline-block
-  border: 1px solid transparent
+  display: block
+  width: 100%
   text-align: center
   font-weight: 600
   white-space: nowrap
-  transition: color 0.25s, border-color 0.25s, background-color 0.25s
   cursor: pointer
-  transition: all 0.3s ease
-  border-radius: 20px
-  padding: 0 20px
-  line-height: 38px
-  font-size: 14px
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s
+  border-radius: 9px
+  padding: 0 16px
+  line-height: 3.75rem
+  font-size: 1rem
 
   &:hover {
     text-decoration: none !important
   }
 
   &.primary {
-    border-color: var(--vp-button-brand-border)
     color: var(--vp-button-brand-text)
     background-color: var(--vp-button-brand-bg)
 
     &:hover {
-      border-color: var(--vp-button-brand-hover-border)
       color: var(--vp-button-brand-hover-text)
       background-color: var(--vp-button-brand-hover-bg)
     }
 
     &:active {
-      border-color: var(--vp-button-brand-active-border)
       color: var(--vp-button-brand-active-text)
       background-color: var(--vp-button-brand-active-bg)
     }
   }
 
   &.secondary {
-    border-color: var(--vp-button-alt-border)
     color: var(--vp-button-alt-text)
     background-color: var(--vp-button-alt-bg)
 
     &:hover {
-      border-color: var(--vp-button-alt-hover-border)
       color: var(--vp-button-alt-hover-text)
       background-color: var(--vp-button-alt-hover-bg)
     }
 
     &:active {
-      border-color: var(--vp-button-alt-active-border)
       color: var(--vp-button-alt-active-text)
       background-color: var(--vp-button-alt-active-bg)
     }
@@ -157,7 +349,7 @@ function handleAnalytics(type: 'nightly' | 'stable') {
   }
 
   .text {
-    margin-right: 10px
+    margin-right: 0.5rem
   }
 
   .version {
@@ -165,10 +357,13 @@ function handleAnalytics(type: 'nightly' | 'stable') {
   }
 }
 
-.version-disclaimer {
-  display: block
-  text-align: center
-  margin: 0.75em auto
-  font-size: 0.75rem
+@media (max-width 640px) {
+  .release-cards {
+    grid-template-columns: 1fr
+  }
+
+  .release-card {
+    padding: 1.25rem
+  }
 }
 </style>
