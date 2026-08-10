@@ -48,22 +48,11 @@ function handleAnalytics(type: 'nightly' | 'stable') {
         Unsupported operating system
       </p>
       <p>
-        <strong>Rokku</strong> is an <strong>Android app</strong> only.
-        Use an <strong>Android device</strong> to download and install the app.
-      </p>
-    </div>
-    <div v-if="!isAndroid" class="custom-block warning">
-      <p class="custom-block-title">
-        Caution
+        <strong>Rokku</strong> is only available on Android. Any non-Android app named <strong>Rokku</strong> is unaffiliated with this project.
       </p>
       <p>
-        Any app for any operating systems other than Android called
-        <strong>Rokku</strong> is not affiliated with this project.
+        Read the <a href="/docs/faq/general">General FAQ</a> for more information.
       </p>
-      <blockquote>
-        For more information, read the
-        <a href="/docs/faq/general">General FAQ</a>.
-      </blockquote>
     </div>
     <section class="release-selector" aria-label="Choose your release">
       <div class="release-cards">
