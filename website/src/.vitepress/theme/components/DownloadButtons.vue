@@ -215,6 +215,10 @@ function handleAnalytics(type: 'nightly' | 'stable') {
     color: var(--vp-c-brand-darker)
     background: var(--vp-c-brand-soft)
   }
+
+  .dark .stable & {
+    color: var(--vp-c-brand-light)
+  }
 }
 
 .release-details {
@@ -247,6 +251,10 @@ function handleAnalytics(type: 'nightly' | 'stable') {
     .stable & {
       color: var(--vp-c-brand-darker)
       background: var(--vp-c-brand-dimm)
+    }
+
+    .dark .stable & {
+      color: var(--vp-c-brand-light)
     }
   }
 
