@@ -5,6 +5,7 @@ import {
   IconAlertOutline,
   IconAndroid,
   IconCalendarOutline,
+  IconFlaskOutline,
   IconTagOutline,
 } from '@iconify-prerendered/vue-mdi'
 import { computed, onMounted, ref } from 'vue'
@@ -58,7 +59,7 @@ function handleAnalytics(type: 'nightly' | 'stable') {
       <div class="release-cards">
         <article class="release-card stable">
           <div class="release-card-header">
-            <span class="release-icon" aria-hidden="true"><img src="/img/logo-128px.png" alt=""></span>
+            <span class="release-icon" aria-hidden="true"><span class="rokku-logo" /></span>
             <div>
               <h3>Stable</h3>
               <p>Recommended for most users</p>
@@ -99,7 +100,7 @@ function handleAnalytics(type: 'nightly' | 'stable') {
         </article>
         <article class="release-card beta">
           <div class="release-card-header">
-            <span class="release-icon" aria-hidden="true"><IconBugReport /></span>
+            <span class="release-icon" aria-hidden="true"><IconFlaskOutline /></span>
             <div>
               <h3>Beta</h3>
               <p>Preview upcoming changes</p>
@@ -164,7 +165,7 @@ function handleAnalytics(type: 'nightly' | 'stable') {
   background: var(--vp-c-bg-soft)
 
   &.stable {
-    border-color: var(--vp-c-brand-border)
+    border-color: var(--vp-c-brand-soft)
     background: var(--vp-c-brand-dimm)
   }
 }
@@ -202,13 +203,16 @@ function handleAnalytics(type: 'nightly' | 'stable') {
     font-size: 2rem
   }
 
-  img {
-    width: 100%
-    height: 100%
-    object-fit: cover
+  .rokku-logo {
+    width: 2.25rem
+    height: 2.25rem
+    background: currentColor
+    mask: url('/safari-pinned-tab.svg') center / contain no-repeat
+    -webkit-mask: url('/safari-pinned-tab.svg') center / contain no-repeat
   }
 
   .stable & {
+    color: var(--vp-c-brand-darker)
     background: var(--vp-c-brand-soft)
   }
 }
