@@ -1,14 +1,8 @@
-import process from 'node:process'
-import { Octokit } from '@octokit/rest'
+import { getStableReleases } from '../.vitepress/config/releaseData'
 
 export default {
   async paths() {
-    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
-    const releases = await octokit.paginate(octokit.repos.listReleases, {
-      owner: 'rokku-app',
-      repo: 'rokku',
-      per_page: 100,
-    })
+    const releases = await getStableReleases()
 
     return releases
       .filter(r => !!r.tag_name)
