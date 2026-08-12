@@ -13,10 +13,12 @@ The app's default behavior is to skip updates for entries that meet the followin
 1. Have unread chapters
 1. Hasn't been started
 1. Marked with a "**Completed**" status
-1. Isn't predicted to receive new chapters yet
+1. Marked with a "**Cancelled**" status
+
+Each of these can be toggled independently in **Settings > Library > Manga update restrictions**.
 
 This strategy helps reduce unnecessary requests which may lead to sources implementing measures against **Rokku** or your extensions.
-* We recommend to prioritize reading your unread chapters, and letting **Rokku** update the library by itself to better adapt & predict chapter releases over time.
+* We recommend to prioritize reading your unread chapters, and letting **Rokku** update the library by itself.
 
 :::tip
 If an entry has infrequent updates or no updates:
