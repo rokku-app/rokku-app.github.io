@@ -2,24 +2,14 @@
 import { computed, ref, toRefs } from 'vue'
 
 const props = defineProps<{ body: string, author: string, tag: string }>()
-const { body, author, tag } = toRefs(props)
-
-function isHigherThan(tagName: string, reference: string) {
-  return reference.localeCompare(tagName, undefined, { numeric: true, sensitivity: 'base' }) >= 0
-}
-
-const notMentioned = computed(() => {
-  return isHigherThan('v0.16.0', tag.value) ? ['AntsyLich'] : []
-})
+const { body, author } = toRefs(props)
 
 const nonExistent = ref<string[]>([])
 
 const contributors = computed(() => {
-  const list = [...body.value.matchAll(/(?<=\(|(, ))@(.*?)(?=\)|(, ))/g)]
+  const list = [...body.value.matchAll(/(?<=\[|\(|(, ))@([a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?)(?=\]|\)|(, ))/gi)]
     .map(match => match[2])
-  const uncredited = author.value.includes('[bot]')
-    ? notMentioned.value
-    : [author.value, ...notMentioned.value]
+  const uncredited = author.value.includes('[bot]') ? ['Londlow'] : [author.value]
 
   return [...new Set([...uncredited, ...list])]
     .filter(user => user !== 'mihon-bot')
