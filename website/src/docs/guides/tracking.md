@@ -11,7 +11,7 @@ Link supported tracking services in <nav to="tracking">.
 
 ## Services
 
-**Rokku** currently supports tracking with [MyAnimeList](https://myanimelist.net/), [AniList](https://anilist.co/), [Kitsu](https://kitsu.app/), [MangaUpdates](https://www.mangaupdates.com/), [Shikimori](https://shikimori.one/), and [Bangumi](https://bangumi.tv/).
+**Rokku** currently supports tracking with [MyAnimeList](https://myanimelist.net/), [AniList](https://anilist.co/), [Kitsu](https://kitsu.app/), [MangaUpdates](https://www.mangaupdates.com/), [Shikimori](https://shikimori.one/), [Bangumi](https://bangumi.tv/), [MangaBaka](https://mangabaka.org/), and [Hikka](https://hikka.io/).
 
 * You must add the desired tracker to each series to begin tracking.
 * Track entries privately with supported tracking services (AniList, Kitsu).
